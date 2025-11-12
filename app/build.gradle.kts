@@ -1,6 +1,3 @@
-import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.jvm.toolchain.JvmVendorSpec
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -38,10 +35,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlin {
-        jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(11))
-            vendor.set(JvmVendorSpec.ADOPTIUM)
-        }
+        jvmToolchain(11)
     }
     buildFeatures {
         compose = true
