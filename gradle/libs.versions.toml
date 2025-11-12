@@ -1,6 +1,6 @@
 [versions]
 agp = "8.13.1"
-kotlin = "2.2.21"
+kotlin = "2.3.0-Beta2" # Updated Kotlin version to match KSP 2.3.x
 coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
