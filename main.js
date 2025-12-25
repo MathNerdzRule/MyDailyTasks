@@ -221,9 +221,12 @@ async function handleAIOptimize() {
 
     const prompt = `
       I have the following daily tasks:
-      ${tasks.map(t => `- ${t.title}: ${t.start} to ${t.end}`).join('\n')}
+      ${tasks
+        .map(t => `- ${t.title}: ${formatTime(t.start)} to ${formatTime(t.end)}`)
+        .join('\n')}
       
       Please analyze this schedule and provide 3-5 concise, actionable productivity tips or suggestions to optimize my day. 
+      IMPORTANT: All times in your response MUST use 12-hour AM/PM format (e.g., 4:00 PM, not 16:00).
       Format the output as a clean HTML list.
     `;
 
