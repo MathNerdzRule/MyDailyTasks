@@ -21,10 +21,15 @@
       <header>
         <div class="logo">
           <span class="logo-icon">✨</span>
-          <h1>MyDailyTasks</h1>
+          <h1>My Daily Tasks</h1>
         </div>
         <div class="header-actions">
-          <button id="ai-optimize-btn" class="btn btn-secondary">
+          <select id="theme-select" class="theme-switcher">
+            <option value="system">🌓 System</option>
+            <option value="light">☀️ Light</option>
+            <option value="dark">🌙 Dark</option>
+          </select>
+          <button id="ai-optimize-btn" class="btn btn-secondary hidden">
             <span class="icon">🪄</span> AI Optimize
           </button>
           <button id="add-task-btn" class="btn btn-primary">

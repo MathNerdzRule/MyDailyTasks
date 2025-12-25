@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // State Management
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 let editingTaskId = null;
+let currentTheme = localStorage.getItem('theme') || 'system';
 
 // DOM Elements
 const tasksContainer = document.getElementById('tasks-container');
@@ -16,17 +17,30 @@ const modalTitle = document.getElementById('modal-title');
 const aiModal = document.getElementById('ai-modal');
 const aiContent = document.getElementById('ai-content');
 const aiCloseBtn = document.getElementById('ai-close-btn');
+const themeSelect = document.getElementById('theme-select');
 
 // Initialize
 function init() {
+  applyTheme(currentTheme);
+  themeSelect.value = currentTheme;
   renderTasks();
   setupEventListeners();
   requestNotificationPermission();
 }
 
+function applyTheme(theme) {
+  if (theme === 'system') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+}
+
 // Render Tasks
 function renderTasks() {
+  // Update AI Optimize button visibility
   if (tasks.length === 0) {
+    aiOptimizeBtn.classList.add('hidden');
     tasksContainer.innerHTML = `
       <div class="loader">
         <p>No tasks yet. Start by adding one!</p>
@@ -34,6 +48,8 @@ function renderTasks() {
     `;
     return;
   }
+
+  aiOptimizeBtn.classList.remove('hidden');
 
   // Sort tasks by start time
   const sortedTasks = [...tasks].sort((a, b) => a.start.localeCompare(b.start));
@@ -69,6 +85,12 @@ function setupEventListeners() {
   taskForm.addEventListener('submit', handleFormSubmit);
   aiOptimizeBtn.addEventListener('click', handleAIOptimize);
   aiCloseBtn.addEventListener('click', () => aiModal.classList.remove('visible'));
+
+  themeSelect.addEventListener('change', (e) => {
+    currentTheme = e.target.value;
+    localStorage.setItem('theme', currentTheme);
+    applyTheme(currentTheme);
+  });
 
   // Global functions for inline onclick (simplified for vanilla)
   window.editTask = (id) => openModal(id);

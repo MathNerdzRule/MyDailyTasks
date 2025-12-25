@@ -38,5 +38,6 @@ This report outlines the process of translating the Android-based "MyDailyTasks"
 ## 3. Improvements in Web App
 
 - **Modern Aesthetics**: Implemented a "premium" design system using Glassmorphism, CSS variables, and the 'Outfit' typography.
+- **Theme Switcher**: Added support for Light, Dark, and System themes, meeting the requirement for standalone applications.
 - **AI Integration**: Added an intelligent scheduling analysis feature powered by Gemini.
 - **Responsive Design**: The web app works seamlessly on mobile, tablet, and desktop browsers.
