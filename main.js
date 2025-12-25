@@ -33,13 +33,17 @@ function populateTimeSelects() {
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const minutes = Array.from({ length: 60 }, (_, i) => i);
 
-  const hourHtml = hours.map(h => `<option value="${h}">${h}</option>`).join('');
-  const minuteHtml = minutes.map(m => `<option value="${m}">${m}</option>`).join('');
+  const hourOptions = hours.map(h => `<option value="${h}">${h}</option>`).join('');
+  const minuteOptions = minutes.map(m => `<option value="${m}">${m.toString().padStart(2, '0')}</option>`).join('');
 
-  document.getElementById('start-h').innerHTML = hourHtml;
-  document.getElementById('end-h').innerHTML = hourHtml;
-  document.getElementById('start-m').innerHTML = minuteHtml;
-  document.getElementById('end-m').innerHTML = minuteHtml;
+  // Get start/end elements
+  ['start', 'end'].forEach(p => {
+    const hSelect = document.getElementById(`${p}-h`);
+    const mSelect = document.getElementById(`${p}-m`);
+    // Keep the "placeholder" first option and append values
+    hSelect.innerHTML = `<option value="" disabled selected>Hr</option>` + hourOptions;
+    mSelect.innerHTML = `<option value="" disabled selected>Min</option>` + minuteOptions;
+  });
 }
 
 function applyTheme(theme) {
@@ -136,6 +140,12 @@ function openModal(id = null) {
     const task = tasks.find(t => t.id === id);
     modalTitle.textContent = 'Edit Task';
     document.getElementById('task-title').value = task.title;
+    
+    // Populate native inputs
+    document.getElementById('start-native').value = task.start;
+    document.getElementById('end-native').value = task.end;
+
+    // Populate custom selects
     const start = timeFrom24h(task.start);
     const end = timeFrom24h(task.end);
     
@@ -148,13 +158,10 @@ function openModal(id = null) {
   } else {
     modalTitle.textContent = 'New Task';
     taskForm.reset();
-    // Default values if needed
-    document.getElementById('start-h').value = "9";
-    document.getElementById('start-m').value = "0";
-    document.getElementById('start-p').value = "AM";
-    document.getElementById('end-h').value = "10";
-    document.getElementById('end-m').value = "0";
-    document.getElementById('end-p').value = "AM";
+    // For selects, reset to placeholders (redundant with form.reset but safer)
+    ['start-h', 'start-m', 'start-p', 'end-h', 'end-m', 'end-p'].forEach(id => {
+      document.getElementById(id).value = "";
+    });
   }
   taskModal.classList.add('visible');
   taskModal.classList.remove('hidden');
@@ -170,16 +177,35 @@ function handleFormSubmit(e) {
   e.preventDefault();
   const title = document.getElementById('task-title').value;
   
-  const start = timeTo24h(
-    document.getElementById('start-h').value,
-    document.getElementById('start-m').value,
-    document.getElementById('start-p').value
-  );
-  const end = timeTo24h(
-    document.getElementById('end-h').value,
-    document.getElementById('end-m').value,
-    document.getElementById('end-p').value
-  );
+  let start, end;
+
+  // Check if we're on mobile (native input visible)
+  const isMobile = window.getComputedStyle(document.getElementById('start-native')).display !== 'none';
+
+  if (isMobile) {
+    start = document.getElementById('start-native').value;
+    end = document.getElementById('end-native').value;
+    if (!start || !end) {
+      alert('Please select both start and end times.');
+      return;
+    }
+  } else {
+    // Desktop custom picker
+    const sh = document.getElementById('start-h').value;
+    const sm = document.getElementById('start-m').value;
+    const sp = document.getElementById('start-p').value;
+    const eh = document.getElementById('end-h').value;
+    const em = document.getElementById('end-m').value;
+    const ep = document.getElementById('end-p').value;
+
+    if (!sh || sm === "" || !sp || !eh || em === "" || !ep) {
+      alert('Please select both start and end times.');
+      return;
+    }
+    
+    start = timeTo24h(sh, sm, sp);
+    end = timeTo24h(eh, em, ep);
+  }
 
   if (start >= end) {
     alert('End time must be after start time.');

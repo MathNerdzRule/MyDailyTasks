@@ -62,11 +62,19 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Start Time</label>
-                <div class="time-picker-wrapper">
-                  <select id="start-h" class="time-select"></select>
+                <!-- Native input for mobile -->
+                <input type="time" id="start-native" class="native-time-input" />
+                <!-- Custom picker for desktop -->
+                <div id="start-custom" class="time-picker-wrapper desktop-only">
+                  <select id="start-h" class="time-select" required>
+                    <option value="" disabled selected>Hr</option>
+                  </select>
                   <span class="sep">:</span>
-                  <select id="start-m" class="time-select"></select>
-                  <select id="start-p" class="time-select ampm">
+                  <select id="start-m" class="time-select" required>
+                    <option value="" disabled selected>Min</option>
+                  </select>
+                  <select id="start-p" class="time-select ampm" required>
+                    <option value="" disabled selected>AM/PM</option>
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>
@@ -74,11 +82,19 @@
               </div>
               <div class="form-group">
                 <label>End Time</label>
-                <div class="time-picker-wrapper">
-                  <select id="end-h" class="time-select"></select>
+                <!-- Native input for mobile -->
+                <input type="time" id="end-native" class="native-time-input" />
+                <!-- Custom picker for desktop -->
+                <div id="end-custom" class="time-picker-wrapper desktop-only">
+                  <select id="end-h" class="time-select" required>
+                    <option value="" disabled selected>Hr</option>
+                  </select>
                   <span class="sep">:</span>
-                  <select id="end-m" class="time-select"></select>
-                  <select id="end-p" class="time-select ampm">
+                  <select id="end-m" class="time-select" required>
+                    <option value="" disabled selected>Min</option>
+                  </select>
+                  <select id="end-p" class="time-select ampm" required>
+                    <option value="" disabled selected>AM/PM</option>
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>

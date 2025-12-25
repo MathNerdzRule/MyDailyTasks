@@ -434,3 +434,29 @@ input:focus,
     justify-content: space-between;
   }
 }
+
+/* Desktop/Mobile logic for time inputs */
+.native-time-input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text) !important;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.desktop-only {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .native-time-input {
+    display: none !important;
+  }
+  .desktop-only {
+    display: flex !important;
+  }
+}
