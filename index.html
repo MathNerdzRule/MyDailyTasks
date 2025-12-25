@@ -61,12 +61,28 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="task-start">Start Time</label>
-                <input type="time" id="task-start" required />
+                <label>Start Time</label>
+                <div class="time-picker-wrapper">
+                  <select id="start-h" class="time-select"></select>
+                  <span class="sep">:</span>
+                  <select id="start-m" class="time-select"></select>
+                  <select id="start-p" class="time-select ampm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
-                <label for="task-end">End Time</label>
-                <input type="time" id="task-end" required />
+                <label>End Time</label>
+                <div class="time-picker-wrapper">
+                  <select id="end-h" class="time-select"></select>
+                  <span class="sep">:</span>
+                  <select id="end-m" class="time-select"></select>
+                  <select id="end-p" class="time-select ampm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="modal-actions">

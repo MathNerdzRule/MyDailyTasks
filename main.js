@@ -21,11 +21,25 @@ const themeSelect = document.getElementById('theme-select');
 
 // Initialize
 function init() {
+  populateTimeSelects();
   applyTheme(currentTheme);
   themeSelect.value = currentTheme;
   renderTasks();
   setupEventListeners();
   requestNotificationPermission();
+}
+
+function populateTimeSelects() {
+  const hours = Array.from({ length: 12 }, (_, i) => i + 1);
+  const minutes = Array.from({ length: 60 }, (_, i) => i);
+
+  const hourHtml = hours.map(h => `<option value="${h}">${h}</option>`).join('');
+  const minuteHtml = minutes.map(m => `<option value="${m}">${m}</option>`).join('');
+
+  document.getElementById('start-h').innerHTML = hourHtml;
+  document.getElementById('end-h').innerHTML = hourHtml;
+  document.getElementById('start-m').innerHTML = minuteHtml;
+  document.getElementById('end-m').innerHTML = minuteHtml;
 }
 
 function applyTheme(theme) {
@@ -72,14 +86,22 @@ function renderTasks() {
 }
 
 function formatTime(timeStr) {
-  const [hours, minutes] = timeStr.split(':');
-  const date = new Date();
-  date.setHours(parseInt(hours), parseInt(minutes));
-  return date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true
-  });
+  const { h, m, p } = timeFrom24h(timeStr);
+  return `${h}:${m.toString().padStart(2, '0')} ${p}`;
+}
+
+function timeTo24h(h, m, p) {
+  let hours = parseInt(h);
+  if (p === 'PM' && hours < 12) hours += 12;
+  if (p === 'AM' && hours === 12) hours = 0;
+  return `${hours.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+function timeFrom24h(time24) {
+  let [h, m] = time24.split(':').map(Number);
+  const p = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return { h, m, p };
 }
 
 // Event Listeners
@@ -114,11 +136,25 @@ function openModal(id = null) {
     const task = tasks.find(t => t.id === id);
     modalTitle.textContent = 'Edit Task';
     document.getElementById('task-title').value = task.title;
-    document.getElementById('task-start').value = task.start;
-    document.getElementById('task-end').value = task.end;
+    const start = timeFrom24h(task.start);
+    const end = timeFrom24h(task.end);
+    
+    document.getElementById('start-h').value = start.h;
+    document.getElementById('start-m').value = start.m;
+    document.getElementById('start-p').value = start.p;
+    document.getElementById('end-h').value = end.h;
+    document.getElementById('end-m').value = end.m;
+    document.getElementById('end-p').value = end.p;
   } else {
     modalTitle.textContent = 'New Task';
     taskForm.reset();
+    // Default values if needed
+    document.getElementById('start-h').value = "9";
+    document.getElementById('start-m').value = "0";
+    document.getElementById('start-p').value = "AM";
+    document.getElementById('end-h').value = "10";
+    document.getElementById('end-m').value = "0";
+    document.getElementById('end-p').value = "AM";
   }
   taskModal.classList.add('visible');
   taskModal.classList.remove('hidden');
@@ -133,8 +169,17 @@ function closeModal() {
 function handleFormSubmit(e) {
   e.preventDefault();
   const title = document.getElementById('task-title').value;
-  const start = document.getElementById('task-start').value;
-  const end = document.getElementById('task-end').value;
+  
+  const start = timeTo24h(
+    document.getElementById('start-h').value,
+    document.getElementById('start-m').value,
+    document.getElementById('start-p').value
+  );
+  const end = timeTo24h(
+    document.getElementById('end-h').value,
+    document.getElementById('end-m').value,
+    document.getElementById('end-p').value
+  );
 
   if (start >= end) {
     alert('End time must be after start time.');

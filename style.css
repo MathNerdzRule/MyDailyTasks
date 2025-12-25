@@ -328,7 +328,45 @@ input {
   font-size: 1rem;
 }
 
-input:focus {
+.time-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 0 0.5rem;
+}
+
+.time-select {
+  background: transparent;
+  border: none;
+  color: var(--text) !important;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.75rem 0.25rem;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.time-select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.time-select.ampm {
+  margin-left: 0.5rem;
+}
+
+.sep {
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+input:focus,
+.time-picker-wrapper:focus-within {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
