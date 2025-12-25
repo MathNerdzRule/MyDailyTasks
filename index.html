@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyDailyTasks - Premium Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="A premium daily task manager with AI optimization powered by Gemini."
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">
+          <span class="logo-icon">✨</span>
+          <h1>MyDailyTasks</h1>
+        </div>
+        <div class="header-actions">
+          <button id="ai-optimize-btn" class="btn btn-secondary">
+            <span class="icon">🪄</span> AI Optimize
+          </button>
+          <button id="add-task-btn" class="btn btn-primary">
+            <span class="icon">➕</span> Add Task
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <div id="tasks-container" class="tasks-grid">
+          <!-- Tasks will be injected here -->
+          <div class="loader">Loading your day...</div>
+        </div>
+      </main>
+
+      <!-- Task Modal -->
+      <div id="task-modal" class="modal hidden">
+        <div class="modal-content glass">
+          <h2 id="modal-title">New Task</h2>
+          <form id="task-form">
+            <div class="form-group">
+              <label for="task-title">Title</label>
+              <input
+                type="text"
+                id="task-title"
+                required
+                placeholder="What needs to be done?"
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="task-start">Start Time</label>
+                <input type="time" id="task-start" required />
+              </div>
+              <div class="form-group">
+                <label for="task-end">End Time</label>
+                <input type="time" id="task-end" required />
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button type="button" id="cancel-btn" class="btn btn-text">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Save Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- AI Feedback Modal -->
+      <div id="ai-modal" class="modal hidden">
+        <div class="modal-content glass ai-gradient">
+          <h2>AI Insights</h2>
+          <div id="ai-content">
+            <p>Analyzing your schedule...</p>
+          </div>
+          <div class="modal-actions">
+            <button id="ai-close-btn" class="btn btn-primary">Got it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
