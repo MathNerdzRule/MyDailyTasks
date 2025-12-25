@@ -15,14 +15,14 @@
   --font-main: "Outfit", sans-serif;
 }
 
-[data-theme="light"] {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --glass: rgba(0, 0, 0, 0.02);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+html[data-theme="light"] {
+  --bg: #f8fafc !important;
+  --surface: #ffffff !important;
+  --text: #0f172a !important;
+  --text-muted: #64748b !important;
+  --glass: rgba(0, 0, 0, 0.02) !important;
+  --glass-border: rgba(0, 0, 0, 0.1) !important;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
 }
 
 @media (prefers-color-scheme: light) {
@@ -37,14 +37,14 @@
   }
 }
 
-[data-theme="dark"] {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+html[data-theme="dark"] {
+  --bg: #0f172a !important;
+  --surface: #1e293b !important;
+  --text: #f8fafc !important;
+  --text-muted: #94a3b8 !important;
+  --glass: rgba(255, 255, 255, 0.05) !important;
+  --glass-border: rgba(255, 255, 255, 0.1) !important;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
 }
 
 * {
@@ -112,6 +112,11 @@ h1 {
   font-size: 0.8rem;
   cursor: pointer;
   outline: none;
+}
+
+.theme-switcher option {
+  background: var(--surface);
+  color: var(--text);
 }
 
 .theme-switcher:hover {
@@ -273,6 +278,7 @@ h1 {
   padding: 2rem;
   border-radius: var(--radius-lg);
   background: var(--surface);
+  color: var(--text);
   border: 1px solid var(--glass-border);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   transform: translateY(20px);
@@ -284,7 +290,7 @@ h1 {
 }
 
 .glass {
-  background: rgba(30, 41, 59, 0.7);
+  background: var(--surface);
   backdrop-filter: blur(20px);
 }
 
@@ -314,10 +320,10 @@ label {
 input {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  color: var(--text);
+  color: var(--text) !important;
   font-family: inherit;
   font-size: 1rem;
 }
@@ -342,6 +348,25 @@ input:focus {
     rgba(168, 85, 247, 0.1)
   );
   border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+#ai-content {
+  line-height: 1.6;
+}
+
+#ai-content ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+#ai-content li {
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+#ai-content strong {
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .loader {

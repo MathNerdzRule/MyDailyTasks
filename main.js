@@ -75,7 +75,11 @@ function formatTime(timeStr) {
   const [hours, minutes] = timeStr.split(':');
   const date = new Date();
   date.setHours(parseInt(hours), parseInt(minutes));
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
 }
 
 // Event Listeners
@@ -207,6 +211,7 @@ async function handleAIOptimize() {
   }
 
   aiContent.innerHTML = '<p class="loader">Gemini is analyzing your schedule...</p>';
+  aiCloseBtn.classList.add('hidden');
   aiModal.classList.add('visible');
   aiModal.classList.remove('hidden');
 
@@ -230,6 +235,8 @@ async function handleAIOptimize() {
   } catch (error) {
     console.error('AI Error:', error);
     aiContent.innerHTML = `<p style="color: var(--danger)">Error: ${error.message}</p>`;
+  } finally {
+    aiCloseBtn.classList.remove('hidden');
   }
 }
 
