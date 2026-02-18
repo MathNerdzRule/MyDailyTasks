@@ -224,7 +224,7 @@ async function handleQuickAdd() {
     }
   } catch (error) {
     console.error('Quick Add Error:', error);
-    alert('AI couldn\\'t parse that. Try a simpler format or use the Add Task button.');
+    alert('AI couldn\'t parse that. Try a simpler format or use the Add Task button.');
   } finally {
     quickAddBtn.textContent = '➔';
     quickAddBtn.disabled = false;
